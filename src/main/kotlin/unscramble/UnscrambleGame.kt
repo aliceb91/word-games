@@ -2,11 +2,9 @@ package unscramble
 
 class UnscrambleGame(fileUtils: FileUtils) {
 
-    // 2 Call file utils class
     val repository = fileUtils
     private val wordList: List<String> = generateWords()
-    var word: String = randomWord()
-    var randomised: String = jumbleWord(word)
+    var words: List<String> = randomWords(2)
     var victory: Boolean = false
 
     fun unscramble() {
@@ -15,16 +13,15 @@ class UnscrambleGame(fileUtils: FileUtils) {
         // val input = readLine()
         // if input == word, Congratulations! you win, exitProcess()
         // else Oh no! That's not the correct word, exitProcess()
-        println("Your jumbled word is: $randomised")
-        print("Take a guess: ")
-        val userInput: String = readln()
-        parseInput(userInput)
+        println("Welcome to Unscramble!")
+        println("Try and unscramble these two words, you only get one shot at each!")
+        runGame()
         println("Exiting program now...")
         kotlin.system.exitProcess(0)
     }
 
-    fun randomWord(): String {
-        return wordList.shuffled()[0]
+    fun randomWords(wordCount: Int): List<String> {
+        return wordList.shuffled().take(wordCount)
     }
 
     fun jumbleWord(word: String): String {
@@ -40,8 +37,8 @@ class UnscrambleGame(fileUtils: FileUtils) {
         return shuffledWord
     }
 
-    fun parseInput(input: String): Unit {
-        if (input == word) {
+    fun parseInput(input: String, index: Int): Unit {
+        if (input == words[index]) {
             println("Congratulation! Your guess of $input was correct!")
             victory = true
         } else {
@@ -57,6 +54,13 @@ class UnscrambleGame(fileUtils: FileUtils) {
             }
     }
 
-    // 1 Move readFile into its own class
-    // 4 Change file utils class to accept a file name from anywhere
+    fun runGame(): Unit {
+        words.forEachIndexed {index, it ->
+            val randomised = jumbleWord(it)
+            println("Your jumbled word is: $randomised")
+            print("Take a guess: ")
+            val userInput: String = readln()
+            parseInput(userInput, index)
+        }
+    }
 }

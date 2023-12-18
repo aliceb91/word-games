@@ -23,7 +23,9 @@ There are no current arguments to the program.
 
 ### Assumptions
 
-The program should retrieve its words from ```words.txt```
+- The program should retrieve its words from ```words.txt```
+
+- The program should give 
 
 ### Issues
 Currently unsure about how to test for behaviors involving the presence of specific files

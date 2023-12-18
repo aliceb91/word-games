@@ -13,7 +13,7 @@ class UnscrambleGameTest {
         Mockito.`when`(mockRepository.readFromPath("./words.txt")).thenReturn(data)
         val underTest = UnscrambleGame(mockRepository)
         val expected: Int = 5
-        val result: Int  = underTest.randomWord().length
+        val result: Int  = underTest.randomWords(1)[0].length
         assertEquals(expected, result)
     }
 
@@ -24,20 +24,9 @@ class UnscrambleGameTest {
         Mockito.`when`(mockRepository.readFromPath("./words.txt")).thenReturn(data)
         val underTest = UnscrambleGame(mockRepository)
         val expected: Boolean = true
-        val result: Boolean = underTest.randomWord() in data
+        val result: Boolean = underTest.randomWords(1)[0] in data
         assertEquals(expected, result)
     }
-
-//    @Test
-//    fun `jumbledWord method returns a jumbled version of a complex string`() {
-//        val data: List<String> = listOf("hello")
-//        val mockRepository = Mockito.mock(FileUtils::class.java)
-//        Mockito.`when`(mockRepository.readFile("words.txt")).thenReturn(data)
-//        val underTest = UnscrambleGame(mockRepository)
-//        val expected: String = "ehllo"
-//        val result: String = underTest.jumbleWord(underTest.word).toCharArray().sorted().joinToString("")
-//        assertEquals(expected, result)
-//    }
 
     @Test
     fun `jumbledWord method does not return the original word`() {
@@ -46,7 +35,7 @@ class UnscrambleGameTest {
         Mockito.`when`(mockRepository.readFromPath("./words.txt")).thenReturn(data)
         val underTest = UnscrambleGame(mockRepository)
         val unexpected: String = "where"
-        val result: String = underTest.jumbleWord(underTest.word)
+        val result: String = underTest.jumbleWord(underTest.words[0])
         assertNotEquals(unexpected, result)
     }
 
@@ -57,8 +46,19 @@ class UnscrambleGameTest {
         Mockito.`when`(mockRepository.readFromPath("./words.txt")).thenReturn(data)
         val underTest = UnscrambleGame(mockRepository)
         val expected: Boolean = true
-        underTest.parseInput("hello")
+        underTest.parseInput("hello", 0)
         val result: Boolean = underTest.victory
         assertEquals(expected, result)
     }
+
+//    @Test
+//    fun `parseInput method sets victory to false between guesses`() {
+//        val data: List<String> = listOf("hello", "where")
+//        val mockRepository = Mockito.mock(FileUtils::class.java)
+//        val underTest = UnscrambleGame(mockRepository)
+//        val expected1: Boolean = true
+//        val expected2: Boolean = false
+//        underTest.words = data
+//
+//    }
 }
