@@ -1,14 +1,10 @@
 package unscramble
 
-class UnscrambleGame {
+class UnscrambleGame(fileUtils: FileUtils) {
 
-    private val wordList: List<String> = listOf(
-        "pound",
-        "trice",
-        "hired",
-        "comma",
-        "logic"
-    )
+    // 2 Call file utils class
+    val repository = fileUtils
+    private val wordList: List<String> = generateWords()
     var word: String = randomWord()
     var randomised: String = jumbleWord(word)
     var victory: Boolean = false
@@ -33,7 +29,7 @@ class UnscrambleGame {
 
     fun jumbleWord(word: String): String {
         var shuffledWord: String = word
-        while (shuffledWord == word && word.length != 1) {
+        while (shuffledWord == word) {
             shuffledWord =
                 word
                 .toCharArray()
@@ -53,4 +49,14 @@ class UnscrambleGame {
             victory = false
         }
     }
+
+    fun generateWords(): List<String> {
+        return repository.readFromPath("./words.txt")
+            .filter {
+                it.length == 5
+            }
+    }
+
+    // 1 Move readFile into its own class
+    // 4 Change file utils class to accept a file name from anywhere
 }

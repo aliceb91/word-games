@@ -22,3 +22,8 @@ To run the unscramble word game, run ```java -jar build/libs/unscramble.jar``` a
 There are no current arguments to the program.
 
 ### Assumptions
+
+The program should retrieve its words from ```words.txt```
+
+### Issues
+Currently unsure about how to test for behaviors involving the presence of specific files
