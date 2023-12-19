@@ -20,8 +20,25 @@ class UnscrambleGame(fileUtils: FileUtils) {
         kotlin.system.exitProcess(0)
     }
 
+    fun generateWords(): List<String> {
+        return repository.readFromPath("./words.txt")
+            .filter {
+                it.length == 5
+            }
+    }
+
     fun randomWords(wordCount: Int): List<String> {
         return wordList.shuffled().take(wordCount)
+    }
+
+    fun runGame(): Unit {
+        words.forEachIndexed {index, it ->
+            val randomised = jumbleWord(it)
+            println("Your jumbled word is: $randomised")
+            print("Take a guess: ")
+            val userInput: String = readln()
+            parseInput(userInput, index)
+        }
     }
 
     fun jumbleWord(word: String): String {
@@ -39,28 +56,11 @@ class UnscrambleGame(fileUtils: FileUtils) {
 
     fun parseInput(input: String, index: Int): Unit {
         if (input == words[index]) {
-            println("Congratulation! Your guess of $input was correct!")
+            println("Congratulations! Your guess of $input was correct!")
             victory = true
         } else {
             println("Oh no! Your guess of $input was incorrect!")
             victory = false
-        }
-    }
-
-    fun generateWords(): List<String> {
-        return repository.readFromPath("./words.txt")
-            .filter {
-                it.length == 5
-            }
-    }
-
-    fun runGame(): Unit {
-        words.forEachIndexed {index, it ->
-            val randomised = jumbleWord(it)
-            println("Your jumbled word is: $randomised")
-            print("Take a guess: ")
-            val userInput: String = readln()
-            parseInput(userInput, index)
         }
     }
 }

@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.mockito:mockito-core:3.3.3")
+    testImplementation ("com.github.stefanbirkner:system-lambda:1.2.0")
 }
 
 tasks.test {
