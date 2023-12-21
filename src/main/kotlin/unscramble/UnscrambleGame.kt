@@ -4,8 +4,6 @@ class UnscrambleGame(fileUtils: FileUtils) {
 
     val repository = fileUtils
     private val wordList: List<String> = generateWords()
-    var words: List<String> = randomWords(2)
-    var victory: Boolean = false
 
     fun unscramble() {
         // val word = randomWord()
@@ -13,11 +11,11 @@ class UnscrambleGame(fileUtils: FileUtils) {
         // val input = readLine()
         // if input == word, Congratulations! you win, exitProcess()
         // else Oh no! That's not the correct word, exitProcess()
-        println("Welcome to Unscramble!")
-        println("Try and unscramble these two words, you only get one shot at each!")
-        runGame()
-        println("Exiting program now...")
-        kotlin.system.exitProcess(0)
+//        println("Welcome to Unscramble!")
+//        println("Try and unscramble these two words, you only get one shot at each!")
+//        runGame()
+//        println("Exiting program now...")
+//        kotlin.system.exitProcess(0)
     }
 
     fun generateWords(): List<String> {
@@ -31,36 +29,36 @@ class UnscrambleGame(fileUtils: FileUtils) {
         return wordList.shuffled().take(wordCount)
     }
 
-    fun runGame(): Unit {
-        words.forEachIndexed {index, it ->
-            val randomised = jumbleWord(it)
-            println("Your jumbled word is: $randomised")
-            print("Take a guess: ")
-            val userInput: String = readln()
-            parseInput(userInput, index)
+//    fun runGame(words: List<String>): Unit {
+//        words.forEachIndexed {index, it ->
+//            val randomised = jumbleWord(it)
+//            println("Your jumbled word is: $randomised")
+//            print("Take a guess: ")
+//            val userInput: String = readln()
+//            parseInput(userInput, index)
+//        }
+//    }
+
+    fun jumbleWords(words: List<String>): List<String> {
+        return words.map {
+            var shuffledWord: String = it
+            while (shuffledWord == it) {
+                shuffledWord =
+                    it
+                        .toCharArray()
+                        .toList()
+                        .shuffled()
+                        .joinToString("")
+            }
+            shuffledWord
         }
     }
 
-    fun jumbleWord(word: String): String {
-        var shuffledWord: String = word
-        while (shuffledWord == word) {
-            shuffledWord =
-                word
-                .toCharArray()
-                .toList()
-                .shuffled()
-                .joinToString("")
-        }
-        return shuffledWord
-    }
-
-    fun parseInput(input: String, index: Int): Unit {
-        if (input == words[index]) {
-            println("Congratulations! Your guess of $input was correct!")
-            victory = true
+    fun parseInput(input: String, original: String): Boolean {
+        if (input == original) {
+            return true
         } else {
-            println("Oh no! Your guess of $input was incorrect!")
-            victory = false
+            return false
         }
     }
 }
