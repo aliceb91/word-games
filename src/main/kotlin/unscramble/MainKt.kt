@@ -15,10 +15,10 @@ class MainKt {
             println("Welcome to Unscramble!")
             println("Try and unscramble these two words, you only get one shot at each!")
             randomised.forEachIndexed {index, it ->
-                println("Your jumbled word is: ${randomised[index]}")
+                println("Your jumbled word is: $it")
                 print("Type out your guess here: ")
                 userInput = readln()
-                victory = game.parseInput(userInput, randomised[index])
+                victory = game.parseInput(userInput, words[index])
                 if (victory == true) {
                     println("Congratulations! Your guess of $userInput was correct!")
                 } else {
